@@ -1,7 +1,17 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 function Home() {
-  return <h2>Home</h2>;
+  return (
+    <div class="body__wrapper flex">
+      <div class="title__container">
+        <div>
+          <h1>FLUSHABLE or NOT?</h1>
+          <Link to="/Game">Play</Link>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default Home;

@@ -19,3 +19,28 @@ img {
   flex: 100%;
   text-align: center;
 }
+
+/* Kento's Styes */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.body__wrapper {
+  height: 100vh;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title__container {
+  text-align: center;
+}
