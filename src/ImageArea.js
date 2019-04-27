@@ -67,7 +67,9 @@ class ImageArea extends Component {
   };
 
   checkKeypress = (e) => {
-    console.log(e.keyCode);
+    if(!this.props.isPlaying) {
+      return;
+    }
     let checkIndex;
     if(e.keyCode === 37) { checkIndex = 0 }
     else if(e.keyCode === 40) { checkIndex = 1 }
@@ -76,17 +78,17 @@ class ImageArea extends Component {
 
     if([37, 38, 39, 40].includes(e.keyCode)) {
       if(this.roundList[checkIndex].substring(0, 1) === this.target) {
-        alert("win");
+        this.props.roundOver("win");
       }
       else {
-        alert("lose");
+        this.props.roundOver("lose");
       }
     }
   }
 
   componentDidUpdate = () => {
     if(this.props.isPlaying) {
-      document.addEventListener("keyup", this.checkKeypress);  
+      document.addEventListener("keyup", this.checkKeypress);
     }
   }
 
