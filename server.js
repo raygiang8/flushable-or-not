@@ -48,10 +48,10 @@ io.on("connection", function (socket) {
         let playerIds = Object.keys(players);
 
         if(playerIds[0] === socket.id) {
-            io.sockets.to(socket.id).emit("updateEnemy", players[1]);
+            io.sockets.to(socket.id).emit("updateEnemy", players[playerIds[1]]);
         }
         else {
-            io.sockets.to(socket.id).emit("updateEnemy", players[0]);
+            io.sockets.to(socket.id).emit("updateEnemy", players[playerIds[0]]);
         }
     });
 });
