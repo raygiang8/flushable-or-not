@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ImageArea from './ImageArea';
 import Header from './Header';
-
+import GameOverModal from './Modal';
 
 class Game extends Component {
   constructor(props) {
@@ -11,7 +11,8 @@ class Game extends Component {
       currentChallenge: null,
       score: 0,
       toiletOverflow: 0, // 0 = empty, 10 = full
-      timer: 5
+      timer: 5,
+      gameOver: false,
     };
 
     /* Challenges:
@@ -60,6 +61,7 @@ class Game extends Component {
           toiletOverflow: newToiletOverflow,
           isPlaying: false,
           currentChallenge: null,
+          gameOver: true,
         });
       }
       else {
@@ -96,6 +98,9 @@ class Game extends Component {
           isPlaying={this.state.isPlaying}
           currChallenge={this.state.currentChallenge}
           roundOver={this.roundOver}
+        />
+        <GameOverModal
+          open={true}
         />
       </div>
     );
