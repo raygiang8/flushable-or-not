@@ -27,7 +27,7 @@ class ImageArea extends Component {
     return arr;
   };
 
-  // Get a list of 1 Flushable Object and 3 Unflushable Objects
+  // Get a list of 1 Flushable Object and limit-1 Unflushable Objects
   getFlushableList = () => {
     let list = [];
     let flushableIndex = Math.floor(Math.random() * this.flushables.length);
@@ -47,7 +47,7 @@ class ImageArea extends Component {
     );
   };
 
-  // Get a list of 1 Unflushable Object and 3 Flushable Objects
+  // Get a list of 1 Unflushable Object and limit-1 Flushable Objects
   getUnflushableList = () => {
     let list = [];
     let unflushableIndex = Math.floor(Math.random() * this.unflushables.length);
@@ -56,6 +56,42 @@ class ImageArea extends Component {
     for(let i=0; i<this.limit-1; i++) {
       let flushableIndex = Math.floor(Math.random() * this.flushables.length);
       list.push(this.flushables[flushableIndex]);
+    }
+
+    this.roundList = this.shuffle(list);
+
+    this.displayList = this.roundList.map((file, index) =>
+      <div className="image-container" key={index}>
+        <img className="game-image" key={index} src={'./assets/' + file} alt="Flushable or Unflushable Object" />
+      </div>
+    );
+  };
+
+  // Get a list of 'limit' flushable objects
+  getFlushableOnlyList = () => {
+    let list = [];
+
+    for(let i=0; i<this.limit; i++) {
+      let flushableIndex = Math.floor(Math.random() * this.flushables.length);
+      list.push(this.flushables[flushableIndex]);
+    }
+
+    this.roundList = this.shuffle(list);
+
+    this.displayList = this.roundList.map((file, index) =>
+      <div className="image-container" key={index}>
+        <img className="game-image" key={index} src={'./assets/' + file} alt="Flushable or Unflushable Object" />
+      </div>
+    );
+  };
+
+  // Get a list of 'limit' unflushable objects
+  getUnflushableOnlyList = () => {
+    let list = [];
+
+    for(let i=0; i<this.limit; i++) {
+      let unflushableIndex = Math.floor(Math.random() * this.unflushables.length);
+      list.push(this.unflushables[unflushableIndex]);
     }
 
     this.roundList = this.shuffle(list);
@@ -98,28 +134,37 @@ class ImageArea extends Component {
       this.getFlushableList();
       this.challenge = "Find the Flushable";
       this.target = 'f';
-      this.roundInterval = setTimeout(() => { this.props.roundOver("lose"); }, 1000 * this.props.timer)
+      this.roundInterval = setTimeout(() => { this.props.roundOver("lose"); }, 1000 * this.props.timer);
     }
     else if(this.props.currChallenge === 1) {
       this.getUnflushableList();
       this.challenge = "Find the Unflushable";
       this.target = 'u';
-      this.roundInterval = setTimeout(() => { this.props.roundOver("lose"); }, 1000 * this.props.timer)
+      this.roundInterval = setTimeout(() => { this.props.roundOver("lose"); }, 1000 * this.props.timer);
     }
     else if(this.props.currChallenge === 2) {
       this.getUnflushableList();
       this.challenge = "Find the Not Flushable";
       this.target = 'u';
+      this.roundInterval = setTimeout(() => { this.props.roundOver("lose"); }, 1000 * this.props.timer);
     }
     else if(this.props.currChallenge === 3) {
       this.getFlushableList();
       this.challenge = "Find the Not Unflushable";
       this.target = 'f';
+      this.roundInterval = setTimeout(() => { this.props.roundOver("lose"); }, 1000 * this.props.timer);
     }
     else if(this.props.currChallenge === 4) {
-      this.getUnflushableList();
+      this.getUnflushableOnlyList();
+      this.challenge = "Find the Flushable";
+      this.target = '*';
+      this.roundInterval = setTimeout(() => { this.props.roundOver("win"); }, 1000 * this.props.timer);
+    }
+    else if(this.props.currChallenge === 5) {
+      this.getFlushableOnlyList();
       this.challenge = "Find the Unflushable";
-      this.target = 'u';
+      this.target = '*';
+      this.roundInterval = setTimeout(() => { this.props.roundOver("win"); }, 1000 * this.props.timer)
     }
 
     if(!this.props.isPlaying) {
