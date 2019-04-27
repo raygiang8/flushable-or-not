@@ -14,10 +14,10 @@ class Game extends Component {
     // Connect socket
     const socket  = io.connect();
       
-    //   * Challenges:
-    //   0 : Find the flushable
-    //     1:  Find the unflushable
-    // */
+    /* Challenges:
+      0 : Find the flushable
+      1:  Find the unflushable
+    */
     this.challenges = [0, 1];
   
     // 0 = empty, 10 = full
