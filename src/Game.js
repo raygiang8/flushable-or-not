@@ -115,6 +115,9 @@ class Game extends Component {
           <div>
             <a className="primary-button" href="/Game">Play Again!</a>
           </div>
+          <div>
+          <a className="primary-button" href="/">Back to Home</a>
+          </div>
         </Modal>
       </div>
     );
