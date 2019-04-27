@@ -44,3 +44,35 @@ body {
 .title__container {
   text-align: center;
 }
+
+.primary-button {
+  padding: 15px 30px;
+  background-color: #9e2a2b;
+  text-decoration: none;
+  color: #fff3b0;
+  border-radius: 4px;
+}
+
+.primary-button:hover {
+  background-color: #540b0e;
+  color: #e09f3e;
+  animation: changeColorGreenToBlue ease;
+  animation-iteration-count: infinite;
+  animation-duration: 4s;
+  animation-fill-mode: both;
+  animation-name: changeColorBlueToGreen;
+  animation-iteration-count: infinite;
+  animation-duration: 4s;
+}
+
+@keyframes alternateColor {
+  0% {
+    background-color: rgb(146, 213, 142);
+  }
+  50% {
+    background-color: rgb(133, 184, 222);
+  }
+  100% {
+    background-color: rgb(146, 213, 142);
+  }
+}
