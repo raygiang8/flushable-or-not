@@ -10,10 +10,11 @@ class ImageArea extends Component {
     this.challenge = null;
     this.flushables = ['f1.png', 'f2.png'];
     this.unflushables = ['u1.png', 'u2.png', 'u3.png'];
-    this.limit = 3;
+    this.limit = 4;
 
     this.roundList = null;
     this.displayList = null;
+    this.roundInterval = null;
   }
 
   // Shuffle the order of the elements inside the array
@@ -32,7 +33,7 @@ class ImageArea extends Component {
     let flushableIndex = Math.floor(Math.random() * this.flushables.length);
     list.push(this.flushables[flushableIndex]);
 
-    for(let i=0; i<this.limit; i++) {
+    for(let i=0; i<this.limit-1; i++) {
       let unflushableIndex = Math.floor(Math.random() * this.unflushables.length);
       list.push(this.unflushables[unflushableIndex]);
     }
@@ -52,7 +53,7 @@ class ImageArea extends Component {
     let unflushableIndex = Math.floor(Math.random() * this.unflushables.length);
     list.push(this.unflushables[unflushableIndex]);
 
-    for(let i=0; i<this.limit; i++) {
+    for(let i=0; i<this.limit-1; i++) {
       let flushableIndex = Math.floor(Math.random() * this.flushables.length);
       list.push(this.flushables[flushableIndex]);
     }
@@ -78,21 +79,22 @@ class ImageArea extends Component {
 
     if([37, 38, 39, 40].includes(e.keyCode)) {
       if(this.roundList[checkIndex].substring(0, 1) === this.target) {
+        clearTimeout(this.roundInterval);
         this.props.roundOver("win");
       }
       else {
+        clearTimeout(this.roundInterval);
         this.props.roundOver("lose");
       }
     }
-  }
-
-  componentDidUpdate = () => {
-    if(this.props.isPlaying) {
-      document.addEventListener("keyup", this.checkKeypress);
-    }
-  }
+  };
 
   render() {
+    if(this.props.isPlaying) {
+      document.addEventListener("keyup", this.checkKeypress);
+      this.roundInterval = setTimeout(() => { this.props.roundOver("lose"); }, 1000 * this.props.timer)
+    }
+
     if(this.props.currChallenge === 0) {
       this.getFlushableList();
       this.challenge = "Find the Flushable";

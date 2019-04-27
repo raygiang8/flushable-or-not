@@ -11,6 +11,7 @@ class Game extends Component {
       currentChallenge: null,
       score: 0,
       toiletOverflow: 0, // 0 = empty, 10 = full
+      timer: 5
     };
 
     // Connect socket
@@ -37,8 +38,14 @@ class Game extends Component {
     if(status === "win") {
       let challenge = Math.floor(Math.random() * this.challenges.length);
       let newScore = this.state.score + 1;
-
+      let newTimer = this.state.timer;
+      
+      if(this.state.timer >= 0.5) {
+        newTimer -= 0.1;
+      }
+      
       this.setState({
+        timer: newTimer.toFixed(1),
         score: newScore,
         isPlaying: true,
         currentChallenge: challenge,
@@ -55,8 +62,13 @@ class Game extends Component {
         });
       }
       else {
-        let challenge = Math.floor(Math.random() * this.challenges.length);  
+        let challenge = Math.floor(Math.random() * this.challenges.length);
+        let newTimer = this.state.timer;
+        if(this.state.timer >= 0.5) {
+          newTimer -= 0.1;
+        }  
         this.setState({
+          timer: newTimer.toFixed(1),
           toiletOverflow: newToiletOverflow,
           isPlaying: true,
           currentChallenge: challenge,
@@ -72,7 +84,9 @@ class Game extends Component {
         <button id="start-game" onClick={this.newGame}>Start Game</button>
         <div>Score: { this.state.score }</div>
         <div>Toilet Level: { this.state.toiletOverflow }</div>
+        <div>Timer: { this.state.timer }</div>
         <ImageArea
+          timer={this.state.timer}
           isPlaying={this.state.isPlaying}
           currChallenge={this.state.currentChallenge}
           roundOver={this.roundOver}
