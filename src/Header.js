@@ -2,17 +2,17 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
-function Header() {
+function Header(props) {
   return (
     <div className="flex-container justify-around"> 
       <div>
-        Score:
+        Score: {props.score}
       </div>
       <div>
-        Find the Flushable!
+        {props.currChallenge}
       </div>
       <div>
-        Toilet Level:
+        Toilet Level: {props.toiletLevel}
       </div>
     </div>
   );
