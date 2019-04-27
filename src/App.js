@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import io from 'socket.io-client';
 import './App.css';
+import ImageArea from './ImageArea';
 
 class App extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class App extends Component {
     return (
       <div>
         Hello
+        <ImageArea />
       </div>
     );
   }
