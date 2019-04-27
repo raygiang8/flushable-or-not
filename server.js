@@ -58,6 +58,14 @@ io.on("connection", function (socket) {
     socket.on("endGame", function() {
         let playerIds = Object.keys(players);
 
+        console.log(players[playerIds[1]]);
+        if(playerIds[0] === socket.id) {
+            players[playerIds[0]].toiletOverflow += 1;
+        }
+        else {
+            players[playerIds[1]].toiletOverflow += 1;
+        }
+
         io.sockets.to(playerIds[0]).emit("updateEnemy", players[playerIds[1]]);
         io.sockets.to(playerIds[1]).emit("updateEnemy", players[playerIds[0]]);
 
