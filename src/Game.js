@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ImageArea from './ImageArea';
 import io from 'socket.io-client';
+import Header from './Header';
 
 
 class Game extends Component {
@@ -13,7 +14,7 @@ class Game extends Component {
       toiletOverflow: 0, // 0 = empty, 10 = full
       timer: 5
     };
-      
+
     /* Challenges:
       0 : Find the flushable
       1:  Find the unflushable
@@ -34,15 +35,15 @@ class Game extends Component {
   }
 
   roundOver = (status) => {
-    if(status === "win") {
+    if (status === "win") {
       let challenge = Math.floor(Math.random() * this.challenges.length);
       let newScore = this.state.score + 1;
       let newTimer = this.state.timer;
-      
-      if(this.state.timer >= 0.5) {
+
+      if (this.state.timer >= 0.5) {
         newTimer -= 0.1;
       }
-      
+
       this.setState({
         timer: newTimer.toFixed(1),
         score: newScore,
@@ -53,7 +54,7 @@ class Game extends Component {
     else {
       let newToiletOverflow = this.state.toiletOverflow + 1;
 
-      if(this.state.toiletOverflow === 9) {
+      if (this.state.toiletOverflow === 9) {
         this.setState({
           toiletOverflow: newToiletOverflow,
           isPlaying: false,
@@ -63,9 +64,9 @@ class Game extends Component {
       else {
         let challenge = Math.floor(Math.random() * this.challenges.length);
         let newTimer = this.state.timer;
-        if(this.state.timer >= 0.5) {
+        if (this.state.timer >= 0.5) {
           newTimer -= 0.1;
-        }  
+        }
         this.setState({
           timer: newTimer.toFixed(1),
           toiletOverflow: newToiletOverflow,
@@ -83,10 +84,15 @@ class Game extends Component {
   render() {
     return (
       <div>
+        <Header
+          score={this.state.score}
+          toiletLevel={this.state.toiletOverflow}
+          currChallenge={this.state.currentChallenge}
+        />
         <h1>Flushable or Not</h1>
-        <div>Score: { this.state.score }</div>
-        <div>Toilet Level: { this.state.toiletOverflow }</div>
+
         <div>Timer: { this.state.timer }</div>
+
         <ImageArea
           timer={this.state.timer}
           isPlaying={this.state.isPlaying}

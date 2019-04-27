@@ -2,16 +2,19 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
-function Header() {
+function Header(props) {
   return (
-    <ul>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/Game">Game</Link>
-      </li>
-    </ul>
+    <div className="flex-container justify-around"> 
+      <div>
+        Score: {props.score}
+      </div>
+      <div>
+        {props.currChallenge}
+      </div>
+      <div>
+        Toilet Level: {props.toiletLevel}
+      </div>
+    </div>
   );
 }
 
