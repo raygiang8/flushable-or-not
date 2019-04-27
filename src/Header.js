@@ -38,12 +38,12 @@ class Header extends Component {
           <div className="">
             <h3 className="header__heading">Score: {this.props.score} </h3>
           </div>
-          <div className="">
-            <h3 className="header__heading">Toilet Level: {this.props.toiletLevel}</h3>
+          <div className="header__timer">
+            <h3 className="header__heading">Time to Choose: {this.props.timer} seconds</h3>
           </div>
-        </div>
-        <div className="header__timer">
-          <h3 className="header__heading">Time to Choose: {this.props.timer} seconds</h3>
+          <div className="">
+            <h3 className="header__heading">Toilet Clog Level: {props.toiletLevel}</h3>
+          </div>
         </div>
         {/*<TimerBar time={this.props.timer} />*/}
       </div>

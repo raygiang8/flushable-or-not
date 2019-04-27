@@ -1,26 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-responsive-modal';
- 
+
 class GameOverModal extends React.Component {
   state = {
     open: false,
   };
- 
+
   onOpenModal = () => {
-    this.setState({ open: true });
+    if (this.props.open === true) {
+      this.setState({ open: true });
+    }
   };
- 
+
   onCloseModal = () => {
     this.setState({ open: false });
   };
- 
+
   render() {
 
     const { open } = this.state;
     return (
       <div>
-        <button onClick={this.onOpenModal}>Open modal</button>
+        {/* <button onClick={this.onOpenModal}>Open modal</button> */}
         <Modal open={open} onClose={this.onCloseModal} center>
           <h2>Simple centered modal</h2>
         </Modal>
@@ -28,5 +30,5 @@ class GameOverModal extends React.Component {
     );
   }
 }
- 
+
 export default GameOverModal;
