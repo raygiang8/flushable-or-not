@@ -7,9 +7,12 @@ class ImageArea extends Component {
       // displayList: null,
     };
 
+    this.challenge = null;
     this.flushables = ['f1.png', 'f2.png'];
     this.unflushables = ['u1.png', 'u2.png', 'u3.png'];
     this.limit = 3;
+
+    this.roundList = null;
     this.displayList = null;
   }
 
@@ -34,9 +37,11 @@ class ImageArea extends Component {
       list.push(this.unflushables[unflushableIndex]);
     }
 
-    this.displayList = this.shuffle(list).map((file, index) =>
-      <div className="image-container">
-        <img className="game-image" index={index} src={'./assets/' + file} alt="Picture of a Flushable or Unflushable Object" />
+    this.roundList = this.shuffle(list);
+
+    this.displayList = this.roundList.map((file, index) =>
+      <div className="image-container" key={index}>
+        <img className="game-image" key={index} src={'./assets/' + file} alt="Flushable or Unflushable Object" />
       </div>
     );
   };
@@ -52,18 +57,49 @@ class ImageArea extends Component {
       list.push(this.flushables[flushableIndex]);
     }
 
-    this.displayList = this.shuffle(list).map((file, index) =>
-      <div className="image-container">
-        <img className="game-image" index={index} src={'./assets/' + file} alt="Picture of a Flushable or Unflushable Object" />
+    this.roundList = this.shuffle(list);
+
+    this.displayList = this.roundList.map((file, index) =>
+      <div className="image-container" key={index}>
+        <img className="game-image" key={index} src={'./assets/' + file} alt="Flushable or Unflushable Object" />
       </div>
     );
   };
 
+  checkKeypress = (e) => {
+    console.log(e.keyCode);
+
+    if(e.keyCode===37) {
+      if(this.roundList[0].substring(0, 1) === this.target) {
+        alert("win");
+      }
+    }
+  }
+
+  componentDidUpdate = () => {
+    if(this.props.isPlaying) {
+      document.addEventListener("keyup", this.checkKeypress);  
+    }
+  }
+
   render() {
-    this.getFlushableList();
+    if(this.props.currChallenge === 0) {
+      this.getFlushableList();
+      this.challenge = "Find the Flushable";
+      this.target = 'f';
+    }
+    else if(this.props.currChallenge === 1) {
+      this.getUnflushableList();
+      this.challenge = "Find the Unflushable";
+      this.target = 'u';
+    }
+
     return (
-      <div id="image-area" className="flex-container">
-        { this.displayList }
+      <div>
+        <h2 id="challenge-title">{ this.challenge }</h2>
+        <div id="image-area" className="flex-container">
+          { this.displayList }
+        </div>
       </div>
     );
   }
