@@ -41,6 +41,10 @@ body {
   background-color: #540b0e;
 }
 
+.header__title {
+  color: #fff3b0;
+}
+
 .header__content {
   display: flex;
   flex-direction: row;
@@ -83,6 +87,7 @@ body {
 .styles_closeIcon__1QwbI {
   display: none !important;
 }
+
 .styles_modal__gNwvD {
   display: flex;
   flex-direction: column;

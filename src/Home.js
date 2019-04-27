@@ -13,6 +13,12 @@ function Home() {
           >
             PLAY!
           </Link>
+          <Link
+            to="/MultiplayerGame"
+            className="primary-button"
+          >
+            PLAY MULTIPLAYER!
+          </Link>
         </div>
       </div>
     </div>

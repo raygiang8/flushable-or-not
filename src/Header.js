@@ -10,7 +10,7 @@ class Header extends Component {
     return (
       <div className="header">
         <div className="header__timer">
-          <h1>Flushable or Not</h1>
+          <h1 className="header__title">Flushable or Not</h1>
         </div>
 
         <div className="header__content">
