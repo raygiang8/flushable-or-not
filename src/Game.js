@@ -91,10 +91,6 @@ class Game extends Component {
           currChallenge={this.state.currentChallenge}
           timer={this.state.timer}
         />
-        <h1>Flushable or Not</h1>
-
-        <div>Timer: { this.state.timer }</div>
-
         <ImageArea
           timer={this.state.timer}
           isPlaying={this.state.isPlaying}
