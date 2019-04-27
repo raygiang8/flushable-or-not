@@ -28,6 +28,8 @@ class Game extends Component {
     this.setState({
       isPlaying: true,
       currentChallenge: challenge,
+      score: 0,
+      toiletOverflow: 0,
     });
   }
 
