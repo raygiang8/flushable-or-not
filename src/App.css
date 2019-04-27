@@ -9,3 +9,8 @@ img {
 .image-container {
   flex: 25%;
 }
+
+#challenge-title {
+  flex: 100%;
+  text-align: center;
+}
