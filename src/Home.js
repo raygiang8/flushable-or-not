@@ -7,7 +7,12 @@ function Home() {
       <div class="title__container">
         <div>
           <h1>FLUSHABLE or NOT?</h1>
-          <Link to="/Game">Play</Link>
+          <Link
+            to="/Game"
+            className="primary-button"
+          >
+            PLAY!
+          </Link>
         </div>
       </div>
     </div>
