@@ -10,6 +10,11 @@ img {
   flex: 25%;
 }
 
+.game-buttons {
+  flex: 25%;
+  text-align: center;
+}
+
 #challenge-title {
   flex: 100%;
   text-align: center;

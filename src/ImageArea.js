@@ -68,10 +68,18 @@ class ImageArea extends Component {
 
   checkKeypress = (e) => {
     console.log(e.keyCode);
+    let checkIndex;
+    if(e.keyCode === 37) { checkIndex = 0 }
+    else if(e.keyCode === 40) { checkIndex = 1 }
+    else if(e.keyCode === 38) { checkIndex = 2 }
+    else if(e.keyCode === 39) { checkIndex = 3 }
 
-    if(e.keyCode===37) {
-      if(this.roundList[0].substring(0, 1) === this.target) {
+    if([37, 38, 39, 40].includes(e.keyCode)) {
+      if(this.roundList[checkIndex].substring(0, 1) === this.target) {
         alert("win");
+      }
+      else {
+        alert("lose");
       }
     }
   }
@@ -94,11 +102,23 @@ class ImageArea extends Component {
       this.target = 'u';
     }
 
+    if(!this.props.isPlaying) {
+      return(
+        <div></div>
+      );
+    }
+
     return (
       <div>
         <h2 id="challenge-title">{ this.challenge }</h2>
         <div id="image-area" className="flex-container">
           { this.displayList }
+        </div>
+        <div className="flex-container">
+          <div className="game-buttons">Left</div>
+          <div className="game-buttons">Down</div>
+          <div className="game-buttons">Up</div>
+          <div className="game-buttons">Right</div>
         </div>
       </div>
     );
