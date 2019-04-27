@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ImageArea from './ImageArea';
-import io from 'socket.io-client';
 import Header from './Header';
 
 
@@ -16,12 +15,14 @@ class Game extends Component {
     };
 
     /* Challenges:
-      0 : Find the flushable
+      0:  Find the flushable
       1:  Find the unflushable
       2:  Find the not flushable
       3:  Find the not unflushable
+      4:  Find the flushable (there is none)
+      5:  Find the unflushable (there is none)
     */
-    this.challenges = [0, 1, 2, 3];
+    this.challenges = [0, 1, 2, 3, 4, 5];
   }
 
   newGame = () => {

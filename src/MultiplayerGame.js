@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ImageArea from './ImageArea';
 import io from 'socket.io-client';
-
+import './MultiplayerGame.css';
 
 class Game extends Component {
   constructor(props) {
@@ -11,19 +11,27 @@ class Game extends Component {
       currentChallenge: null,
       score: 0,
       toiletOverflow: 0, // 0 = empty, 10 = full
-      timer: 5
+      timer: 5, // 5 seconds intitially, goes down by .1 every round
+      gameFull: false,
+      isPlayer: false,
     };
 
     // Connect socket
-    const socket  = io.connect();
+    this.socket  = io.connect();
       
     /* Challenges:
-      0 : Find the flushable
+      0:  Find the flushable
       1:  Find the unflushable
       2:  Find the not flushable
       3:  Find the not unflushable
+      4:  Find the flushable (there is none)
+      5:  Find the unflushable (there is none)
     */
-    this.challenges = [0, 1, 2, 3];
+    this.challenges = [0, 1, 2, 3, 4, 5];
+    this.enemyStats = {
+      score: 0,
+      toiletOverflow: 0,
+    };
   }
 
   newGame = () => {
@@ -34,7 +42,7 @@ class Game extends Component {
       score: 0,
       toiletOverflow: 0,
     });
-  }
+  };
 
   roundOver = (status) => {
     if(status === "win") {
@@ -52,6 +60,8 @@ class Game extends Component {
         isPlaying: true,
         currentChallenge: challenge,
       });
+
+      this.socket.emit("scoreUpdate", this.state);
     }
     else {
       let newToiletOverflow = this.state.toiletOverflow + 1;
@@ -76,26 +86,66 @@ class Game extends Component {
           currentChallenge: challenge,
         });
       }
+      this.socket.emit("scoreUpdate", this.state);
     }
   };
 
   componentDidMount = () => {
-    this.newGame();
+    /* SOCKETS */
+
+    this.socket.on("gameFull", () => {
+      this.setState({
+        gameFull: true,
+      });
+    });
+
+    this.socket.on("gameStart", () => {
+      this.setState({
+        isPlayer: true,
+      });
+      this.newGame();
+    });
+
+    this.socket.on("updateEnemy", (data) => {
+      console.log(data);
+      this.enemyStats = data;
+    });
   };
 
   render() {
+    if(this.state.gameFull) {
+      return(
+        <div>
+          Game is Full Try Again Later
+        </div>
+      );
+    }
+    else if(!this.state.isPlayer) {
+      return(
+        <div>
+          Waiting for another Player
+        </div>
+      );
+    }
+
     return (
       <div>
         <h1>Flushable or Not</h1>
         <div>Score: { this.state.score }</div>
         <div>Toilet Level: { this.state.toiletOverflow }</div>
         <div>Timer: { this.state.timer }</div>
-        <ImageArea
-          timer={this.state.timer}
-          isPlaying={this.state.isPlaying}
-          currChallenge={this.state.currentChallenge}
-          roundOver={this.roundOver}
-        />
+
+        <div>Opponent Score: { this.enemyStats.score }</div>
+        <div>Opponent Toilet Level: { this.enemyStats.toiletOverflow }</div>
+
+        <div class="game-area">
+          <ImageArea id="this-player"
+            timer={this.state.timer}
+            isPlaying={this.state.isPlaying}
+            currChallenge={this.state.currentChallenge}
+            roundOver={this.roundOver}
+          />
+        </div>
       </div>
     );
   }
