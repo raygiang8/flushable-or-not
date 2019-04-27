@@ -92,15 +92,31 @@ class ImageArea extends Component {
   render() {
     if(this.props.isPlaying) {
       document.addEventListener("keyup", this.checkKeypress);
-      this.roundInterval = setTimeout(() => { this.props.roundOver("lose"); }, 1000 * this.props.timer)
     }
 
     if(this.props.currChallenge === 0) {
       this.getFlushableList();
       this.challenge = "Find the Flushable";
       this.target = 'f';
+      this.roundInterval = setTimeout(() => { this.props.roundOver("lose"); }, 1000 * this.props.timer)
     }
     else if(this.props.currChallenge === 1) {
+      this.getUnflushableList();
+      this.challenge = "Find the Unflushable";
+      this.target = 'u';
+      this.roundInterval = setTimeout(() => { this.props.roundOver("lose"); }, 1000 * this.props.timer)
+    }
+    else if(this.props.currChallenge === 2) {
+      this.getUnflushableList();
+      this.challenge = "Find the Not Flushable";
+      this.target = 'u';
+    }
+    else if(this.props.currChallenge === 3) {
+      this.getFlushableList();
+      this.challenge = "Find the Not Unflushable";
+      this.target = 'f';
+    }
+    else if(this.props.currChallenge === 4) {
       this.getUnflushableList();
       this.challenge = "Find the Unflushable";
       this.target = 'u';

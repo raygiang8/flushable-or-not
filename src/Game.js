@@ -13,15 +13,14 @@ class Game extends Component {
       toiletOverflow: 0, // 0 = empty, 10 = full
       timer: 5
     };
-
-    // Connect socket
-    const socket  = io.connect();
       
     /* Challenges:
       0 : Find the flushable
       1:  Find the unflushable
+      2:  Find the not flushable
+      3:  Find the not unflushable
     */
-    this.challenges = [0, 1];
+    this.challenges = [0, 1, 2, 3];
   }
 
   newGame = () => {
@@ -75,13 +74,16 @@ class Game extends Component {
         });
       }
     }
-  }
+  };
+
+  componentDidMount = () => {
+    this.newGame();
+  };
 
   render() {
     return (
       <div>
         <h1>Flushable or Not</h1>
-        <button id="start-game" onClick={this.newGame}>Start Game</button>
         <div>Score: { this.state.score }</div>
         <div>Toilet Level: { this.state.toiletOverflow }</div>
         <div>Timer: { this.state.timer }</div>
