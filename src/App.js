@@ -1,46 +1,21 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import io from 'socket.io-client';
 import './App.css';
-import ImageArea from './ImageArea';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Header from './Header';
+import Game from './Game';
+import Home from './Home';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isPlaying: null,
-      currentChallenge: null,
-    };
-
-    // Connect socket
-    const socket  = io.connect();
-
-    /* Challenges:
-        0: Find the flushable
-        1: Find the unflushable
-    */
-    this.challenges = [0, 1];
-
-    // 0 = empty, 10 = full
-    this.toiletOverflow = 0;
-  }
-
-  newGame = () => {
-    let challenge = Math.floor(Math.random() * this.challenges.length);
-    this.setState({
-      isPlaying: true,
-      currentChallenge: challenge,
-    });
-  }
-
-  render() {
-    return (
+function App() {
+  return (
+    <Router>
       <div>
-        <h1>Flushable or Not</h1>
-        <button id="start-game" onClick={this.newGame}>Start Game</button>
-        <ImageArea isPlaying={this.state.isPlaying} currChallenge={this.state.currentChallenge} />
+        <Header />
+        <Route exact path="/" component={Home} />
+        <Route path="/Game" component={Game} />
       </div>
-    );
-  }
+    </Router>
+  );
 }
 
 export default App;
