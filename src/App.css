@@ -35,6 +35,29 @@ body {
   height: 100vh;
 }
 
+.header {
+  display: flex;
+  flex-direction: column;
+  background-color: #540b0e;
+}
+
+.header__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.header__timer {
+  display: flex;
+  justify-content: center;
+}
+
+.header__heading {
+  color: #fff3b0;
+  margin: 0 10em;
+  ;
+}
+
 .flex {
   display: flex;
   justify-content: center;
@@ -56,27 +79,19 @@ body {
 .primary-button:hover {
   background-color: #540b0e;
   color: #e09f3e;
-  animation: changeColorGreenToBlue ease;
-  animation-iteration-count: infinite;
-  animation-duration: 4s;
-  animation-fill-mode: both;
-  animation-name: changeColorBlueToGreen;
-  animation-iteration-count: infinite;
-  animation-duration: 4s;
 }
 
-.justify-around {
-  justify-content: space-around;
+/* #timerBar {
+  width: 200px;
+  height: 20px;
+  background-color: white;
 }
 
-@keyframes alternateColor {
-  0% {
-    background-color: rgb(146, 213, 142);
+@keyframes timer {
+  from {
+    width: 200px;
   }
-  50% {
-    background-color: rgb(133, 184, 222);
+  to {
+    width: 0px;
   }
-  100% {
-    background-color: rgb(146, 213, 142);
-  }
-}
+} */
