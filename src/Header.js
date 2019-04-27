@@ -14,7 +14,7 @@ function Header(props) {
           <h3 className="header__heading">{props.currChallenge}</h3>
         </div>
         <div className="">
-          <h3 className="header__heading">Toilet Level: {props.toiletLevel}</h3>
+          <h3 className="header__heading">Toilet Clog Level: {props.toiletLevel}</h3>
         </div>
       </div>
       <div className="header__timer">

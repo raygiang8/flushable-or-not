@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import ImageArea from './ImageArea';
 import Header from './Header';
-import GameOverModal from './Modal';
-
+import Modal from 'react-responsive-modal';
 class Game extends Component {
   constructor(props) {
     super(props);
@@ -84,7 +83,19 @@ class Game extends Component {
     this.newGame();
   };
 
+
+  onOpenModal = () => {
+    if (this.props.open === true) {
+      this.setState({ open: true });
+    }
+  };
+
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
+
   render() {
+    const { gameOver } = this.state;
     return (
       <div>
         <Header
@@ -99,9 +110,12 @@ class Game extends Component {
           currChallenge={this.state.currentChallenge}
           roundOver={this.roundOver}
         />
-        <GameOverModal
-          open={true}
-        />
+        <Modal open={gameOver} onClose={this.onCloseModal} center>
+          <h2>Your Score: {this.state.score}</h2>
+          <div>
+            <a className="primary-button" href="/Game">Play Again!</a>
+          </div>
+        </Modal>
       </div>
     );
   }
