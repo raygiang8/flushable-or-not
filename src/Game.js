@@ -9,6 +9,8 @@ class Game extends Component {
     this.state = {
       isPlaying: null,
       currentChallenge: null,
+      score: 0,
+      toiletOverflow: 0, // 0 = empty, 10 = full
     };
 
     // Connect socket
@@ -19,9 +21,6 @@ class Game extends Component {
       1:  Find the unflushable
     */
     this.challenges = [0, 1];
-  
-    // 0 = empty, 10 = full
-    this.toiletOverflow = 0;
   }
 
   newGame = () => {
@@ -32,12 +31,50 @@ class Game extends Component {
     });
   }
 
+  roundOver = (status) => {
+    if(status === "win") {
+      let challenge = Math.floor(Math.random() * this.challenges.length);
+      let newScore = this.state.score + 1;
+
+      this.setState({
+        score: newScore,
+        isPlaying: true,
+        currentChallenge: challenge,
+      });
+    }
+    else {
+      let newToiletOverflow = this.state.toiletOverflow + 1;
+
+      if(this.state.toiletOverflow === 9) {
+        this.setState({
+          toiletOverflow: newToiletOverflow,
+          isPlaying: false,
+          currentChallenge: null,
+        });
+      }
+      else {
+        let challenge = Math.floor(Math.random() * this.challenges.length);  
+        this.setState({
+          toiletOverflow: newToiletOverflow,
+          isPlaying: true,
+          currentChallenge: challenge,
+        });
+      }
+    }
+  }
+
   render() {
     return (
       <div>
         <h1>Flushable or Not</h1>
         <button id="start-game" onClick={this.newGame}>Start Game</button>
-        <ImageArea isPlaying={this.state.isPlaying} currChallenge={this.state.currentChallenge} />
+        <div>Score: { this.state.score }</div>
+        <div>Toilet Level: { this.state.toiletOverflow }</div>
+        <ImageArea
+          isPlaying={this.state.isPlaying}
+          currChallenge={this.state.currentChallenge}
+          roundOver={this.roundOver}
+        />
       </div>
     );
   }
