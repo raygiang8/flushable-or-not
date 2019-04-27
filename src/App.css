@@ -65,6 +65,10 @@ body {
   animation-duration: 4s;
 }
 
+.justify-around {
+  justify-content: space-around;
+}
+
 @keyframes alternateColor {
   0% {
     background-color: rgb(146, 213, 142);
