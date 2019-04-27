@@ -54,4 +54,13 @@ io.on("connection", function (socket) {
             io.sockets.to(socket.id).emit("updateEnemy", players[playerIds[0]]);
         }
     });
+
+    socket.on("endGame", function() {
+        let playerIds = Object.keys(players);
+
+        io.sockets.to(playerIds[0]).emit("updateEnemy", players[playerIds[1]]);
+        io.sockets.to(playerIds[1]).emit("updateEnemy", players[playerIds[0]]);
+
+        io.sockets.emit("gameOver");
+    });
 });

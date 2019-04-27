@@ -45,48 +45,52 @@ class Game extends Component {
   };
 
   roundOver = (status) => {
-    if(status === "win") {
-      let challenge = Math.floor(Math.random() * this.challenges.length);
-      let newScore = this.state.score + 1;
-      let newTimer = this.state.timer;
-      
-      if(this.state.timer >= 0.5) {
-        newTimer -= 0.1;
-      }
-      
-      this.setState({
-        timer: newTimer.toFixed(1),
-        score: newScore,
-        isPlaying: true,
-        currentChallenge: challenge,
-      });
-
-      this.socket.emit("scoreUpdate", this.state);
-    }
-    else {
-      let newToiletOverflow = this.state.toiletOverflow + 1;
-
-      if(this.state.toiletOverflow === 9) {
-        this.setState({
-          toiletOverflow: newToiletOverflow,
-          isPlaying: false,
-          currentChallenge: null,
-        });
-      }
-      else {
+    if(this.state.isPlaying) {
+      if(status === "win") {
         let challenge = Math.floor(Math.random() * this.challenges.length);
+        let newScore = this.state.score + 1;
         let newTimer = this.state.timer;
+        
         if(this.state.timer >= 0.5) {
           newTimer -= 0.1;
-        }  
+        }
+        
         this.setState({
           timer: newTimer.toFixed(1),
-          toiletOverflow: newToiletOverflow,
+          score: newScore,
           isPlaying: true,
           currentChallenge: challenge,
         });
+
+        this.socket.emit("scoreUpdate", this.state);
       }
-      this.socket.emit("scoreUpdate", this.state);
+      else {
+        let newToiletOverflow = this.state.toiletOverflow + 1;
+
+        if(this.state.toiletOverflow === 9) {
+          this.socket.emit("endGame", newToiletOverflow);
+
+          this.setState({
+            toiletOverflow: newToiletOverflow,
+            isPlaying: false,
+            currentChallenge: null,
+          });
+        }
+        else {
+          let challenge = Math.floor(Math.random() * this.challenges.length);
+          let newTimer = this.state.timer;
+          if(this.state.timer >= 0.5) {
+            newTimer -= 0.1;
+          }  
+          this.setState({
+            timer: newTimer.toFixed(1),
+            toiletOverflow: newToiletOverflow,
+            isPlaying: true,
+            currentChallenge: challenge,
+          });
+        }
+        this.socket.emit("scoreUpdate", this.state);
+      }
     }
   };
 
@@ -107,8 +111,14 @@ class Game extends Component {
     });
 
     this.socket.on("updateEnemy", (data) => {
-      console.log(data);
       this.enemyStats = data;
+    });
+
+    this.socket.on("gameOver", () => {
+      this.setState({
+        isPlaying: false,
+        currentChallenge: null,
+      })
     });
   };
 
