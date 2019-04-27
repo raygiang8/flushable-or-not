@@ -9,8 +9,9 @@ function App() {
   return (
     <Router>
       <div>
-        <Route exact path="/" component={Home} />
+        <Route path="" component={Home} />
         <Route path="/Game" component={Game} />
+        <Route path="/MultiplayerGame" component={MultiplayerGame} />
       </div>
     </Router>
   );
