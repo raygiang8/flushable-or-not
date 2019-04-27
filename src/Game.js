@@ -88,6 +88,7 @@ class Game extends Component {
           score={this.state.score}
           toiletLevel={this.state.toiletOverflow}
           currChallenge={this.state.currentChallenge}
+          timer={this.state.timer}
         />
         <h1>Flushable or Not</h1>
 
