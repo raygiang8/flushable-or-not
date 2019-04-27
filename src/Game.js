@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ImageArea from './ImageArea';
-import io from 'socket.io-client';
 import Header from './Header';
 
 
